@@ -24,27 +24,17 @@ class Game
     public function score()
     {
         $score = 0;
-        $latestPins = 0;
-        $isFirstRoll = true; // フレームの一投目なら真
-        $isSpareBonus = false;
+        $current = 0;
+        $pins = $this->fallenPins;
 
-        foreach ($this->fallenPins as $pins) {
-            if ($isSpareBonus) {
-                $score += $pins;
-                $isSpareBonus = false;
-            }
-
-            if ($isFirstRoll) {
-                $isFirstRoll = false;
+        for ($frame = 1; $frame <= 10; $frame++) {
+            if (($pins[$current] + $pins[$current + 1]) == 10) {
+                $score += 10 + $pins[$current + 2];
+                $current += 2;
             } else {
-                if (($pins + $latestPins) == 10) {
-                    $isSpareBonus = true;
-                }
-                $isFirstRoll = true;
+                $score += $pins[$current] + $pins[$current + 1];
+                $current += 2;
             }
-
-            $score += $pins;
-            $latestPins = $pins;
         }
 
         return $score;
