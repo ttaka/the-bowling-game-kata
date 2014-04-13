@@ -1,21 +1,29 @@
 <?php
 class BowlingGameTest extends PHPUnit_Framework_TestCase
 {
+    private $g;
+
+    public function setUp()
+    {
+        $this->g = new Game();
+    }
+
+    private function rollMany($n, $pins)
+    {
+        for ($i = 0; $i < $n; $i++) {
+            $this->g->roll($pins);
+        }
+    }
+
     public function testGutterGame()
     {
-        $g = new Game();
-        for ($i = 0; $i < 20; $i++) {
-            $g->roll(0);
-        }
-        $this->assertEquals(0, $g->score());
+        $this->rollMany(20, 0);
+        $this->assertEquals(0, $this->g->score());
     }
 
     public function testAllOnes()
     {
-        $g = new Game();
-        for ($i = 0; $i < 20; $i++) {
-            $g->roll(1);
-        }
-        $this->assertEquals(20, $g->score());
+        $this->rollMany(20, 1);
+        $this->assertEquals(20, $this->g->score());
     }
 }
