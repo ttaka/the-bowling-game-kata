@@ -38,4 +38,47 @@ class GameTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(20, $game->score());
     }
+
+    /**
+     * スペアをとった時
+     */
+    public function testOneSpare()
+    {
+        $game = $this->game;
+
+        $game->roll(1);
+        $game->roll(9); // スペア
+
+        $game->roll(2); // ボーナス点
+        $game->roll(0);
+
+        for ($i = 5; $i <= 20; $i++) {
+            $game->roll(0);
+        }
+
+        $this->assertEquals(14, $game->score());
+    }
+
+    /**
+     * スペアを連続してとった時
+     */
+    public function testTwoSpare()
+    {
+        $game = $this->game;
+
+        $game->roll(1);
+        $game->roll(9); // スペア
+
+        $game->roll(2); // ボーナス点
+        $game->roll(8); // スペア
+
+        $game->roll(3); // ボーナス点
+        $game->roll(0);
+
+        for ($i = 7; $i <= 20; $i++) {
+            $game->roll(0);
+        }
+
+        $this->assertEquals(28, $game->score());
+    }
 }

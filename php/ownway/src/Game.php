@@ -23,6 +23,30 @@ class Game
      */
     public function score()
     {
-        return array_sum($this->fallenPins);
+        $score = 0;
+        $latestPins = 0;
+        $isFirstRoll = true; // フレームの一投目なら真
+        $isSpareBonus = false;
+
+        foreach ($this->fallenPins as $pins) {
+            if ($isSpareBonus) {
+                $score += $pins;
+                $isSpareBonus = false;
+            }
+
+            if ($isFirstRoll) {
+                $isFirstRoll = false;
+            } else {
+                if (($pins + $latestPins) == 10) {
+                    $isSpareBonus = true;
+                }
+                $isFirstRoll = true;
+            }
+
+            $score += $pins;
+            $latestPins = $pins;
+        }
+
+        return $score;
     }
 }
