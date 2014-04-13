@@ -20,5 +20,6 @@ class Game
      */
     public function score()
     {
+        return 0;
     }
 }
