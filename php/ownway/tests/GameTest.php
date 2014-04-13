@@ -11,6 +11,13 @@ class GameTest extends PHPUnit_Framework_TestCase
         $this->game = new Game();
     }
 
+    private function rollRepeat($count, $pins)
+    {
+        for ($i = 0; $i < $count; $i++) {
+            $this->game->roll($pins);
+        }
+    }
+
     /**
      * 一本も倒せなかった時
      */
@@ -18,9 +25,7 @@ class GameTest extends PHPUnit_Framework_TestCase
     {
         $game = $this->game;
 
-        for ($i = 1; $i <= 20; $i++) {
-            $game->roll(0);
-        }
+        $this->rollRepeat(20, 0);
 
         $this->assertEquals(0, $game->score());
     }
@@ -32,9 +37,7 @@ class GameTest extends PHPUnit_Framework_TestCase
     {
         $game = $this->game;
 
-        for ($i = 1; $i <= 20; $i++) {
-            $game->roll(1);
-        }
+        $this->rollRepeat(20, 1);
 
         $this->assertEquals(20, $game->score());
     }
@@ -52,9 +55,7 @@ class GameTest extends PHPUnit_Framework_TestCase
         $game->roll(2); // ボーナス点
         $game->roll(0);
 
-        for ($i = 5; $i <= 20; $i++) {
-            $game->roll(0);
-        }
+        $this->rollRepeat(16, 0);
 
         $this->assertEquals(14, $game->score());
     }
@@ -75,9 +76,7 @@ class GameTest extends PHPUnit_Framework_TestCase
         $game->roll(3); // ボーナス点
         $game->roll(0);
 
-        for ($i = 7; $i <= 20; $i++) {
-            $game->roll(0);
-        }
+        $this->rollRepeat(14, 0);
 
         $this->assertEquals(28, $game->score());
     }
