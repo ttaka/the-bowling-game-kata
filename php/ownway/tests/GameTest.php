@@ -116,4 +116,32 @@ class GameTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(47, $game->score());
     }
+
+    /**
+     * 全てストライクをとった時(パーフェクトゲーム)
+     */
+    public function testAllStrike()
+    {
+        $game = $this->game;
+
+        $this->rollRepeat(12, 10);
+
+        $this->assertEquals(300, $game->score());
+    }
+
+    /**
+     * 10フレーム目にスペアをとった時
+     */
+    public function testLastFrameSpare()
+    {
+        $game = $this->game;
+
+        $this->rollRepeat(18, 0);
+
+        $game->roll(8);
+        $game->roll(2); // スペア
+        $game->roll(5); // ボーナス点は無し
+
+        $this->assertEquals(15, $game->score());
+    }
 }
