@@ -37,11 +37,16 @@ class BowlingGameTest extends PHPUnit_Framework_TestCase
 
     public function testOneStrike()
     {
-        $this->g->roll(10); // strike
+        $this->rollStrike();
         $this->g->roll(3);
         $this->g->roll(4);
         $this->rollMany(16, 0);
         $this->assertEquals(24, $this->g->score());
+    }
+
+    private function rollStrike()
+    {
+        $this->g->roll(10);
     }
 
     private function rollSpare()
