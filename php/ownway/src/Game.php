@@ -4,6 +4,8 @@
  */
 class Game
 {
+    private $fallenPins = array(); // 投球毎の倒したピンの数
+
     /**
      * 投球
      *
@@ -11,6 +13,7 @@ class Game
      */
     public function roll($pins)
     {
+        $this->fallenPins[] = $pins;
     }
 
     /**
@@ -20,6 +23,6 @@ class Game
      */
     public function score()
     {
-        return 0;
+        return array_sum($this->fallenPins);
     }
 }
