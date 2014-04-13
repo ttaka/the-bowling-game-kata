@@ -28,7 +28,10 @@ class Game
         $pins = $this->fallenPins;
 
         for ($frame = 1; $frame <= 10; $frame++) {
-            if (($pins[$current] + $pins[$current + 1]) == 10) {
+            if ($pins[$current] == 10) {
+                $score += 10 + $pins[$current + 1] + $pins[$current + 2];
+                $current += 1;
+            } elseif (($pins[$current] + $pins[$current + 1]) == 10) {
                 $score += 10 + $pins[$current + 2];
                 $current += 2;
             } else {

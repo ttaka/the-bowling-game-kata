@@ -80,4 +80,40 @@ class GameTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(28, $game->score());
     }
+
+    /**
+     * ストライクをとった時
+     */
+    public function testOneStrike()
+    {
+        $game = $this->game;
+
+        $game->roll(10); // ストライク
+
+        $game->roll(2); // ボーナス点
+        $game->roll(3); // ボーナス点
+
+        $this->rollRepeat(16, 0);
+
+        $this->assertEquals(20, $game->score());
+    }
+
+    /**
+     * ストライクを連続でとった時(ダブル)
+     */
+    public function testTwoStrike()
+    {
+        $game = $this->game;
+
+        $game->roll(10); // ストライク
+
+        $game->roll(10); // ストライク
+
+        $game->roll(3); // ボーナス点
+        $game->roll(4); // ボーナス点
+
+        $this->rollRepeat(14, 0);
+
+        $this->assertEquals(47, $game->score());
+    }
 }
